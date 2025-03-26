@@ -1,0 +1,4 @@
+先编译'xrt_iter_demstat.pro'
+'aia_get_response.pro'（这个要再去找）
+'aia_dem_setup_x.pro'三个文件，然后
+编译再执行'aia2dem_rain1.pro'

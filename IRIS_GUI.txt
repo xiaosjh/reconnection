@@ -1,0 +1,53 @@
+iris_xfiles:quickstart GUI 用户界面
+f = iris_files(path='dir_path')
+read_iris_l2,f[i], index, data ;;;include all time[352=8*44] for SJI or spectruum ;corrected DN
+
+
+;; SJI
+index2map,index,data,map;;;; slow 
+;movie_map,map,dmin=0,dmax=50,/log,/save,xsize=600,ysize=600
+sub_map,map,smap,,xrange=[210,340],yrange=[-500,-370]
+map[m].data = map[m].data/map[m].dur;exp[m] ;;(x,y) ;;;DN/s
+smap0.data=smap0.data/smap0.dur ;;;;DN/s  ;can not deal with array
+iris_lct,'SJI_1330'
+plot_map,smap,color=0,/log,charsize=1.8,dmin=0,dmax=150
+
+
+;;;sepctrum
+d = iris_load(f[i]);;; eq d = iris_obj(f[i])
+d[k]->show_lines
+winid= 2
+data = d->getvar(winid,/load)
+exptime=d->getexp(iwin=winid) ; 曝光时间
+;exptime_NUV[*,m] = index.EXPTIMEN
+;exptime_FUV[*,m] = index.EXPTIMEF
+s = d->getdata(winid);;;why raster can not ;;structrue
+t = d->gettime()
+tai=d->ti2tai()
+tutc=d->ti2utc()
+lambda = d->getlam(iwin)
+
+solar_x = d->getxpos(iwin=iwin)ß
+solar_y = d->getypos()
+
+exp = d->getexp(index,iwin=iwin)
+
+or 
+read_iris_l2,filespect,index0,data0,wave='O I'
+
+help,index
+help,index.CDELT1,index.CDELT2
+;;----  CDELT1          DOUBLE          0.16635000
+;;----  CDELT2          DOUBLE          0.16635000
+
+
+;;Co-align with SDO
+data = congrid(data,xsize,ysize,/interp) ;;scale down resolution
+res = xyoff(data,aia_data,xsize,xsize,xc,yc,/quiet) ; data is ref_data
+
+;---note: SJI resolution:   
+
+
+
+
+

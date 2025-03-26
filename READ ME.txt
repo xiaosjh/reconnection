@@ -1,0 +1,13 @@
+<save_as_movie.ipynb>是将那些仪器的数据先画成电影
+<offset_sum.npy>是存储根据局部区域对齐所需要的偏移量，是一个25*2的矩阵，每一行第一个数对应矩阵第一个坐标，第二个数对应矩阵第二个坐标。
+但死在sunpy画图是第一个数就对应后一个位置
+<sdoth.pro>是用来画time-distance图的slit的文件
+<plot_AIA.pro>是画六个波段的AIA在目标区域的图像，然后保存为图片
+<sub_aia_plot.pro>优化了一下上面那个，画了更集中的区域
+<nfb,sav>是用sdoth.pro画出了狭缝后保存的数据
+<time-distance.py>和<time-distance.ipynb>是想把<sdoth.pro>改成python程序，但是没太改好，弹出窗框jupyter不行，得py文件
+<rot_aia.pro>提前把这些fits文件旋转过去，然后保存到一个列表maplist里，这样再画time-distance会方便很多，这个文件里只做了旋转，没有任何别的操作
+<save_drot_aia.pro>因为没有办法把旋转后的图像顺利保存为fits且header没错，所以我直接把旋转后的图像，想要的小区域切割出来保存为一个结构体，里面就是一个个的矩阵
+<drot_aia_131.pro>是把20个时间的131图像统一旋转到 '2024-06-18T21:18:06.622'，注意已经除了曝光时间
+<drot_sub_aia_save.pro>这个程序是针对12s间隔的AIA数据，将其进行除曝光时间，裁剪、旋转、画图、保存为sav的。裁剪的范围是xrange=[180,410],yrange=[-290,-520]
+<aia_analysis.ipynb>是处理12s间隔的AIA数据
