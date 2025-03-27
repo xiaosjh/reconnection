@@ -1,35 +1,37 @@
 pro process_iris
 ;---------------------------------------------------------------------------------------------------------
-;matrix_struct = REPLICATE({matrix: PTR_NEW()}, 4)
+;matrix_struct = REPLICATE({matrix: PTR_NEW()}, 990)
 ;restore,'D:\Learning\PHD1st\magnetic_reconnecion\data_process\iris_1400_map.sav'
-;values=[399*2+1,403*2+1,404*2+1,423*2+1]
-;for i=0,3 do begin
-;  sub_map,map0[values[i]],smap,xrange=[330,380],yrange=[-355,-405]
+;;values=[399*2+1,403*2+1,404*2+1,423*2+1]
+;for i=0,989 do begin
+;  sub_map,map0[i],smap,xrange=[320,390],yrange=[-352,-462]
 ;  smap.data=smap.data/smap.dur
 ;  matrix_struct[i].matrix=ptr_new(smap.data)
+;  print,i
 ;endfor
-;save,matrix_struct,filename='D:\Learning\PHD1st\magnetic_reconnecion\data_process\three_sji_image.sav'
+;save,matrix_struct,filename='D:\Learning\PHD1st\magnetic_reconnecion\data_process\all_sji_image.sav'
 ;---------------------------------------------------------------------------------------------------------
-;这一部分是用来得到特定三个时刻狭缝的solar_x,solar_y
+;;这一部分是用来得到全部时刻狭缝的solar_x,solar_y
 ;dir='D:\Learning\PHD1st\magnetic_reconnecion\data\IRIS\iris_l2_20240618_163141_3602506433_raster\'
 ;f=iris_files(path=dir)
-;solar_x=fltarr(4,8);58是时间序列上有58幅图像，8是每一幅图有8个solar_x的坐标
-;solar_y=fltarr(4,778)
+;solar_x=fltarr(495,8);58是时间序列上有58幅图像，8是每一幅图有8个solar_x的坐标
+;solar_y=fltarr(495,778)
 ;;取三个时刻，分别是799（399）对应的21：09：27，
 ;;809（404）对应的21：12：56，847（423）对应的21：26：08
-;values=[399,403,404,423]
-;for i=0,3 do begin
-;  d=iris_load(f[values[i]])
+;;values=[399,403,404,423]
+;for i=0,494 do begin
+;  d=iris_load(f[i])
 ;  solar_x[i,*]=d.getxpos()
 ;  solar_y[i,*]=d.getypos()
+;  print,i
 ;endfor
-;save,filename='D:\Learning\PHD1st\magnetic_reconnecion\data_process\solar_xy.sav',solar_x,solar_y
+;save,filename='D:\Learning\PHD1st\magnetic_reconnecion\data_process\all_solar_xy.sav',solar_x,solar_y
 ;----------------------------------------------------------------------------------------------------------
-;restore,'D:\Learning\PHD1st\magnetic_reconnecion\data_process\iris_1400_map.sav'
-; 假设 data1 已经是一个 3D 数组
+restore,'D:\Learning\PHD1st\magnetic_reconnecion\data_process\iris_1400_map.sav'
+ ;假设 data1 已经是一个 3D 数组
 dir='D:\Learning\PHD1st\magnetic_reconnecion\data\IRIS\iris_l2_20240618_163141_3602506433_raster\'
 f=iris_files(path=dir)
-d=iris_load(f[404])
+d=iris_load(f[399])
 d.show_lines
 data1=d.getvar(3,/load)
 raster1 = data1[*, 590, 4]  ; 提取一维数组，与 Python 的 data1[:, 590, 4] 对应
