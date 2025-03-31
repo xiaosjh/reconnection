@@ -11,3 +11,4 @@
 <drot_aia_131.pro>是把20个时间的131图像统一旋转到 '2024-06-18T21:18:06.622'，注意已经除了曝光时间
 <drot_sub_aia_save.pro>这个程序是针对12s间隔的AIA数据，将其进行除曝光时间，裁剪、旋转、画图、保存为sav的。裁剪的范围是xrange=[180,410],yrange=[-290,-520]
 <aia_analysis.ipynb>是处理12s间隔的AIA数据
+<doppler_vel.npy>保存了在799时刻拟合得到的那一条竖列上的多普勒速度，采用单高斯拟合wave_y=rsm[4].data[4,65+i*3:68+i*3,:].mean(axis=0)，i从0到220
