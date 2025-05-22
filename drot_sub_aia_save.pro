@@ -6,9 +6,9 @@ pro drot_sub_aia_save
   for i=0,6 do begin
     dir='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/'+name_range[i]+'/'
     file_list=FILE_SEARCH(dir+'*.fits')
-    matrix_struct=replicate({matrix:ptr_new()},101)
+    ;matrix_struct=replicate({matrix:ptr_new()},101)
     map_list=list()
-    for j=0,31 do begin
+    for j=133,147 do begin
       file=file_list[j]
       read_sdo,file,hdr,data
       hmi_prep,hdr,data,hdr0,data0
@@ -18,7 +18,7 @@ pro drot_sub_aia_save
       dmap.rtime=map0.time
       sub_map,dmap,smap,xrange=[180,410],yrange=[-290,-520]
       datas=smap.data
-      matrix_struct[j-32].matrix=ptr_new(datas)
+      ;matrix_struct[j-32].matrix=ptr_new(datas)
       map_list.add,smap
       aia_lct,wavelnth=value_range[i],/load
       WINDOW,/free,xsize=600,ysize=600
@@ -27,8 +27,8 @@ pro drot_sub_aia_save
       print,j
       wdelete
     endfor
-    save,matrix_struct,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_'+name_range[i]+'.sav'
-    save,map_list,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_map_'+name_range[i]+'.sav'
+;    save,matrix_struct,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_'+name_range[i]+'.sav'
+;    save,map_list,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_map_'+name_range[i]+'.sav'
     ;因为一些原因，这里加了pre_前缀的文件是0-31，不加的是32-132对应的序号
   endfor
 ;----------------------------------------------------------------------------------------
