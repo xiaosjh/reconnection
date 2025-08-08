@@ -13,3 +13,4 @@
 <aia_analysis.ipynb>是处理12s间隔的AIA数据
 <doppler_vel.npy>保存了在799时刻拟合得到的那一条竖列上的多普勒速度，采用单高斯拟合wave_y=rsm[4].data[4,65+i*3:68+i*3,:].mean(axis=0)，i从0到220
 <doppler_sigma_velocity.npz>保存了799时刻的doppler_velocity和速度展宽sigma_velocity，也是转化为km/s了
+<temp.npy>是由DEM_analysis.ipynb生成的由time_distance.py使用的DEM温度图，需要注意的是尺寸问题，在程老师的DEM代码中应该是给x轴y轴都除以2了，但我在保存这个文件的时候又给他两边都拉伸回去了，就导致画时距图时放的点的位置都差了一倍，但不要紧，不影响算出来的速度
