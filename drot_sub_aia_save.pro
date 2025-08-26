@@ -2,11 +2,10 @@ pro drot_sub_aia_save
   ;这个程序是针对12s间隔的AIA数据，将其裁剪、旋转、画图、除曝光时间保存为sav
   name_range=['.94','131','171','193','211','304','335']
   value_range=[94,131,171,193,211,304,335]
-  target_time='
   for i=0,6 do begin
     dir='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/'+name_range[i]+'/'
     file_list=FILE_SEARCH(dir+'*.fits')
-    ;matrix_struct=replicate({matrix:ptr_new()},101)
+    matrix_struct=replicate({matrix:ptr_new()},15)
     map_list=list()
     for j=133,147 do begin
       file=file_list[j]
@@ -18,18 +17,18 @@ pro drot_sub_aia_save
       dmap.rtime=map0.time
       sub_map,dmap,smap,xrange=[180,410],yrange=[-290,-520]
       datas=smap.data
-      ;matrix_struct[j-32].matrix=ptr_new(datas)
-      map_list.add,smap
-      aia_lct,wavelnth=value_range[i],/load
-      WINDOW,/free,xsize=600,ysize=600
-      plot_map,smap,/log
-      write_bmp,'D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/'+name_range[i]+'fig/'+strmid(file_list[j],71,17)+'.bmp',tvrd(/true),/rgb
-      print,j
-      wdelete
+      matrix_struct[j-133].matrix=ptr_new(datas)
+;      map_list.add,smap
+;      aia_lct,wavelnth=value_range[i],/load
+;      WINDOW,/free,xsize=600,ysize=600
+;      plot_map,smap,/log
+;      write_bmp,'D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/'+name_range[i]+'fig/'+strmid(file_list[j],71,17)+'.bmp',tvrd(/true),/rgb
+;      print,j
+;      wdelete
     endfor
-;    save,matrix_struct,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_'+name_range[i]+'.sav'
+    save,matrix_struct,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/post_'+name_range[i]+'.sav'
 ;    save,map_list,filename='D:/Learning/PHD1st/magnetic_reconnecion/data/AIA2/pre_map_'+name_range[i]+'.sav'
-    ;因为一些原因，这里加了pre_前缀的文件是0-31，不加的是32-132对应的序号
+    ;因为一些原因，这里加了pre_前缀的文件是0-31，不加的是32-132对应的序号,加上post是133-147
   endfor
 ;----------------------------------------------------------------------------------------
 ;下面是处理1600，1700的
