@@ -5,13 +5,14 @@ from scipy.interpolate import interp1d, RegularGridInterpolator
 from scipy.ndimage import zoom
 import glob
 from scipy.interpolate import splprep, splev
-data=np.load(r'D:\Learning\PHD1st\magnetic_reconnecion\program\temp.npy')
+#data=np.load(r'D:\Learning\PHD1st\magnetic_reconnecion\program\temp.npy')
+data=np.load(r'D:\Learning\PHD1st\magnetic_reconnecion\program\em.npy')
 #——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 # 生成示例数据 (384*384*34 矩阵)
 #这里的34个数据，在时间上对应的是 D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\DEM10
 #里面从32到98的34个时刻的数据
 fig, ax = plt.subplots()
-ax.imshow(np.log10(data[:, :, 18]),cmap='jet',origin='lower',vmin=6.0,vmax=7.3)  # 参考图，方便画曲线
+ax.imshow(np.log10(data[:, :, 14]),cmap='jet',origin='lower',vmin=26,vmax=29)  # 参考图，方便画曲线
 clicked_points = []
 
 def on_click(event):
@@ -85,7 +86,8 @@ for t in range(data.shape[2]):
     plt.plot(C_x, C_y, color='blue')
     #plt.plot(interp_points2[:,1],interp_points2[:,0],color='blue')
     plt.axis('off')
-    plt.savefig(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\DEM_slice\\'+str(t)+'.png')
+    #plt.savefig(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\DEM_slice\\'+str(t)+'.png')
+    plt.savefig(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\EM_slice\\'+str(t)+'.png')
     plt.close()
 
 
@@ -97,10 +99,13 @@ for t in range(data.shape[2]):
     interp_func = RegularGridInterpolator((y_grid,x_grid), data[:, :, t], method='linear')
     #这个矩阵记录的是插值点对应的值
     result_matrix[:, t] = (interp_func(fit_points)+interp_func(fit_points2)+interp_func(fit_points3))/3
-np.savez(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\fit_points.npz',
+# np.savez(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\fit_points.npz',
+#          fit_points=fit_points, fit_points2=fit_points2, fit_points3=fit_points3)
+np.savez(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\fit_points_em.npz',
          fit_points=fit_points, fit_points2=fit_points2, fit_points3=fit_points3)
 
-np.save(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\result_matrix.npy',result_matrix)
+#np.save(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\result_matrix.npy',result_matrix)
+np.save(r'D:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\result_matrix_em.npy',result_matrix)
 
 print("插值后点的数量:", num_interp)
 print("最终的结果矩阵形状：", result_matrix.shape)
