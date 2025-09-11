@@ -65,6 +65,7 @@ def voigt_single_cloud(lambda1, I_voigt, gamma_voigt, sigma_voigt,
 def voigt_double_cloud(lambda1, I_voigt, gamma_voigt, sigma_voigt,
                        I_cloud1, mu_cloud1, sigma_cloud1,
                        I_cloud2, mu_cloud2, sigma_cloud2, I_constant):
+    #为什么双高斯没有S_l I_0
     z = (lambda1 + 1j * gamma_voigt) / (sigma_voigt * np.sqrt(2))
     voigt_component = np.real(wofz(z)) / (sigma_voigt * np.sqrt(2 * np.pi)) * I_voigt
     tau1 = I_cloud1 * np.exp(-((lambda1 - mu_cloud1) / sigma_cloud1) ** 2)
@@ -478,6 +479,7 @@ for i in range(len(input_fitsfilename_ha_list)):
     if i == 0:
         Delta_S_t_l_interpolated = Delta_S_t1_l_interpolated
         Delta_S_t_l_interpolated_TReqFD = Delta_S_t1_l_interpolated_TReqFD
+        #这个I0是一块小区域相对于
         I_0 = F_t0_l_TR_interpolated * (2 * TR_width / psr + 1) * (2 * TR_height / psr + 1) / (
                 f_t0_lcont_TR * (2 * r_fe + 1) ** 2)
     elif i >= 1:
