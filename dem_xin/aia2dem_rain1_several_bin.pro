@@ -1,14 +1,4 @@
-;flag=1
-;
-;if flag eq 1 then begin
-; dir1='/Volumes/BACKUP2/scar_2nd/null_point/obs/aia_rain/rain_1/'
-; dir2='/Volumes/BACKUP2/scar_2nd/null_point/obs/aia_rain/rain1_dem/'
-;endif
-;
-;if flag eq 2 then begin
-; dir1='/Volumes/BACKUP2/scar_2nd/null_point/obs/aia_rain/rain_2/'
-; dir2='/Volumes/BACKUP2/scar_2nd/null_point/obs/aia_rain/rain2_dem/'
-;endif
+;这个是我分成了1MK,1.5MK,2MK,4MK,8MK来保存平均温度和EM
 dir1='C:\Learning\PHD1st\magnetic_reconnecion\data\AIA2\'
 file94  = findfile(dir1+'.94\'+'*.94.image_lev1.fits')
 file131 = findfile(dir1+'131\'+'*.131.image_lev1.fits')
@@ -89,7 +79,12 @@ dt=0.1
 mc_iter=0
 result={dem_out:dblarr(xs,ys,(max_t-min_t)/dt+1),$
 chisq_out:dblarr(xs,ys),$
-smap_temp:fltarr(xs,ys),smap_em:fltarr(xs,ys)}
+smap_temp:fltarr(xs,ys),smap_em:fltarr(xs,ys),$
+smap_temp_1:fltarr(xs,ys),smap_em_1:fltarr(xs,ys),$
+smap_temp_16:fltarr(xs,ys),smap_em_16:fltarr(xs,ys),$
+smap_temp_2:fltarr(xs,ys),smap_em_2:fltarr(xs,ys),$
+smap_temp_4:fltarr(xs,ys),smap_em_4:fltarr(xs,ys),$
+smap_temp_8:fltarr(xs,ys),smap_em_8:fltarr(xs,ys),temp_all:fltarr(xs,ys,(max_t-min_t)/dt+1)}
 
 for i=0,xs-1 do begin
    for j=0,ys-1 do begin
@@ -108,6 +103,51 @@ base_obs=base_obs,mod_obs=mod_obs,chisq=chisq,obs_err=obs_err,max_t=max_t,min_t=
 result.dem_out[i,j,*]=dem_out
 result.chisq_out[i,j]=chisq
 ;;;calculate the temperature and em maps
+
+temp=10^logt_out
+result.temp_all[i,j,*]=temp
+dem=dem_out[*,0]
+
+min_tt=4
+max_tt=6
+em_1=int_tabulated(temp[min_tt:max_tt],dem[min_tt:max_tt])
+temp_1=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
+temp_1=temp_1/em_1
+result.smap_temp_1[i,j]=temp_1
+result.smap_em_1[i,j]=em_1
+
+min_tt=6
+max_tt=8
+em_16=int_tabulated(temp[min_tt:max_tt],dem[min_tt:max_tt])
+temp_16=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
+temp_16=temp_16/em_16
+result.smap_temp_16[i,j]=temp_16
+result.smap_em_16[i,j]=em_16
+
+min_tt=7
+max_tt=9
+em_2=int_tabulated(temp[min_tt:max_tt],dem[min_tt:max_tt])
+temp_2=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
+temp_2=temp_2/em_2
+result.smap_temp_2[i,j]=temp_2
+result.smap_em_2[i,j]=em_2
+
+min_tt=10
+max_tt=12
+em_4=int_tabulated(temp[min_tt:max_tt],dem[min_tt:max_tt])
+temp_4=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
+temp_4=temp_4/em_4
+result.smap_temp_4[i,j]=temp_4
+result.smap_em_4[i,j]=em_4
+
+min_tt=13
+max_tt=15
+em_8=int_tabulated(temp[min_tt:max_tt],dem[min_tt:max_tt])
+temp_8=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
+temp_8=temp_8/em_8
+result.smap_temp_8[i,j]=temp_8
+result.smap_em_8[i,j]=em_8
+
 min_tt=2
 max_tt=18
 temp=10^logt_out
@@ -117,7 +157,6 @@ temp=int_tabulated(temp[min_tt:max_tt],(temp[min_tt:max_tt]*dem[min_tt:max_tt]))
 temp=temp/em
 result.smap_temp[i,j]=temp
 result.smap_em[i,j]=em
-
    endfor
 print,i,k
 endfor
