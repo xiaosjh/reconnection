@@ -17,3 +17,4 @@
 <em.npy>存储的是EM的信息，其余参数都和temp.npy一样
 <x_opt.npy>是来自于<cloud_model8.ipynb>是我双云模型拟合的参数
 <all_sji_image.sav>来自于文件<process_iris.pro>
+<gaussian_fit.py>是自动高斯拟合的函数
