@@ -235,6 +235,11 @@ def fit_gaussian(
     yerr: np.ndarray | None = None,
     p0: list[float] | tuple[float, ...] | np.ndarray | None = None,
     *,
+    amplitude_guess: float | None = None,
+    center_guess: float | None = None,
+    sigma_guess: float | None = None,
+    background_guess: float | None = None,
+    slope_guess: float | None = None,
     positive: bool | None = None,
     linear_background: bool = False,
     maxfev: int = 10000,
@@ -252,6 +257,9 @@ def fit_gaussian(
         Optional initial guess. Use [amplitude, center, sigma, background] for
         a constant background, or add slope as the fifth value for a linear
         background.
+    amplitude_guess, center_guess, sigma_guess, background_guess, slope_guess:
+        Optional per-parameter initial guesses. Any value left as None is
+        estimated from the data. Do not combine these with p0.
     positive:
         True for an emission peak, False for an absorption peak, None to infer.
     linear_background:
@@ -264,6 +272,13 @@ def fit_gaussian(
     x_ref = float(np.nanmean(x_clean))
 
     n_params = 5 if linear_background else 4
+    individual_guesses = [
+        amplitude_guess,
+        center_guess,
+        sigma_guess,
+        background_guess,
+        slope_guess,
+    ]
     if p0 is None:
         p0_array = _estimate_initial_parameters(
             x_clean,
@@ -272,7 +287,13 @@ def fit_gaussian(
             linear_background=linear_background,
             x_ref=x_ref,
         )
+        guess_overrides = individual_guesses[:n_params]
+        for index, value in enumerate(guess_overrides):
+            if value is not None:
+                p0_array[index] = float(value)
     else:
+        if any(value is not None for value in individual_guesses):
+            raise ValueError("Use either p0 or individual *_guess values, not both.")
         p0_array = np.asarray(p0, dtype=float).ravel()
         if p0_array.size != n_params:
             raise ValueError(f"p0 must contain {n_params} values.")
@@ -352,6 +373,14 @@ def fit_double_gaussian(
     yerr: np.ndarray | None = None,
     p0: list[float] | tuple[float, ...] | np.ndarray | None = None,
     *,
+    amplitude1_guess: float | None = None,
+    center1_guess: float | None = None,
+    sigma1_guess: float | None = None,
+    amplitude2_guess: float | None = None,
+    center2_guess: float | None = None,
+    sigma2_guess: float | None = None,
+    background_guess: float | None = None,
+    slope_guess: float | None = None,
     positive: bool | None = True,
     linear_background: bool = False,
     maxfev: int = 20000,
@@ -369,6 +398,13 @@ def fit_double_gaussian(
         [amp1, center1, sigma1, amp2, center2, sigma2, background] for a
         constant background, or add slope as the eighth value for a linear
         background.
+    amplitude1_guess, center1_guess, sigma1_guess:
+        Optional initial guesses for the first Gaussian component.
+    amplitude2_guess, center2_guess, sigma2_guess:
+        Optional initial guesses for the second Gaussian component.
+    background_guess, slope_guess:
+        Optional initial guesses for the shared background. slope_guess is
+        used only when linear_background=True.
     positive:
         True constrains both components to emission peaks, False constrains
         both to absorption peaks, and None leaves amplitudes unconstrained.
@@ -381,6 +417,16 @@ def fit_double_gaussian(
     x_ref = float(np.nanmean(x_clean))
 
     n_params = 8 if linear_background else 7
+    individual_guesses = [
+        amplitude1_guess,
+        center1_guess,
+        sigma1_guess,
+        amplitude2_guess,
+        center2_guess,
+        sigma2_guess,
+        background_guess,
+        slope_guess,
+    ]
     if p0 is None:
         p0_array = _estimate_double_initial_parameters(
             x_clean,
@@ -389,7 +435,13 @@ def fit_double_gaussian(
             linear_background=linear_background,
             x_ref=x_ref,
         )
+        guess_overrides = individual_guesses[:n_params]
+        for index, value in enumerate(guess_overrides):
+            if value is not None:
+                p0_array[index] = float(value)
     else:
+        if any(value is not None for value in individual_guesses):
+            raise ValueError("Use either p0 or individual *_guess values, not both.")
         p0_array = np.asarray(p0, dtype=float).ravel()
         if p0_array.size != n_params:
             raise ValueError(f"p0 must contain {n_params} values.")
