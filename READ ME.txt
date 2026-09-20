@@ -21,3 +21,4 @@
 <array_despike.py>是将idl中的去除宇宙线等array_despike.pro转写成Python
 <x_opt_new.npy>来自于<cloud_model9.ipynb>，是我多次检索全局最优解得到的更合理的结果，比x_opt.npy更合理
 <x_opt_long.npy>是选取波长范围44-101得到的，但其实并不合理，不在讨论，也来自于cloud_model8.ipynb
+<double_cloud_pixel_fit.py>调用方法参考<draw_image5.ipynb>的单元格

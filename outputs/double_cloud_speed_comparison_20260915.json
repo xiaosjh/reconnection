@@ -1,0 +1,54 @@
+{
+  "note": "Two actual 78-channel spectra; one global run each; otherwise default maxiter/popsize; one BLAS thread; no plotting. Not a full 30-run regional fit.",
+  "lam0": 6562.852356484633,
+  "rows": [
+    {
+      "pixel": [
+        795,
+        1518
+      ],
+      "version": "baseline",
+      "seconds": 7.41025489999447,
+      "raw_sse": 3339.787088523307,
+      "success": true,
+      "vL": -18.56511150536084,
+      "vU": 56.34098294245498
+    },
+    {
+      "pixel": [
+        795,
+        1518
+      ],
+      "version": "optimized",
+      "seconds": 1.4598822999978438,
+      "raw_sse": 3339.787088522831,
+      "success": true,
+      "vL": -18.565109077801438,
+      "vU": 56.34096794975314
+    },
+    {
+      "pixel": [
+        799,
+        1520
+      ],
+      "version": "baseline",
+      "seconds": 3.5731487000593916,
+      "raw_sse": 8229.896758199453,
+      "success": true,
+      "vL": -5.32390381037026,
+      "vU": 44.40210418442379
+    },
+    {
+      "pixel": [
+        799,
+        1520
+      ],
+      "version": "optimized",
+      "seconds": 0.8337209000019357,
+      "raw_sse": 8229.89675819964,
+      "success": true,
+      "vL": -5.323900445494473,
+      "vU": 44.40210318982676
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "lam0": 6562.8,
+  "n_global_runs": 1,
+  "base_seed": 20260706,
+  "de_maxiter": 160,
+  "de_popsize": 10,
+  "max_nfev": 3000,
+  "w_bounds": [
+    3,
+    80
+  ],
+  "shape": [
+    81,
+    2,
+    2
+  ],
+  "y_start": 789,
+  "x_start": 1515,
+  "param_names": [
+    "tau0L",
+    "tau0U",
+    "vL",
+    "vU",
+    "WL",
+    "WU",
+    "SL",
+    "SU"
+  ],
+  "log_param_names": [
+    "ltauL",
+    "ltauU",
+    "vL",
+    "vU",
+    "lWL",
+    "lWU",
+    "SL",
+    "SU"
+  ],
+  "reference": "Shared input I0; no spatial mask",
+  "velocity_unit": "km/s",
+  "width_definition": "tau=tau0*exp(-((v-v0)/W)**2)",
+  "map_axes": "Original array pixels, not solar coordinates",
+  "quality": "success is local convergence only; scale is not measurement noise"
+}

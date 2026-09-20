@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-09T18:38:49.409518",
+  "os": {
+    "system": "Windows",
+    "release": "11",
+    "version": "10.0.26200",
+    "machine": "AMD64",
+    "python_version": "3.12.10"
+  },
+  "cpu": {
+    "physical_cores": 16,
+    "logical_cores": 16,
+    "max_frequency_mhz": 2900.0,
+    "architecture": "AMD64",
+    "processor": "Intel64 Family 6 Model 197 Stepping 2, GenuineIntel",
+    "current_frequency_mhz": 2900.0
+  },
+  "memory": {
+    "total_gb": 63.49,
+    "available_gb": 43.09,
+    "used_gb": 20.4,
+    "percent_used": 32.1,
+    "swap_total_gb": 9.0,
+    "swap_available_gb": 9.0
+  },
+  "disk": {
+    "path": "C:\\Learning\\PHD1st\\magnetic_reconnecion\\program",
+    "total_gb": 952.65,
+    "available_gb": 228.37,
+    "used_gb": 724.28,
+    "percent_used": 76.0
+  },
+  "gpu": {
+    "nvidia_gpus": [],
+    "amd_gpus": [],
+    "apple_silicon": null,
+    "total_gpus": 0,
+    "available_backends": []
+  },
+  "recommendations": {
+    "parallel_processing": {
+      "strategy": "high_parallelism",
+      "suggested_workers": 14,
+      "libraries": [
+        "joblib",
+        "multiprocessing",
+        "dask"
+      ]
+    },
+    "memory_strategy": {
+      "strategy": "memory_abundant",
+      "note": "Can load most datasets into memory"
+    },
+    "gpu_acceleration": {
+      "available": false,
+      "note": "No GPU detected, use CPU-based libraries"
+    },
+    "large_data_handling": {
+      "strategy": "disk_abundant",
+      "note": "Sufficient space for large intermediate files"
+    }
+  }
+}
